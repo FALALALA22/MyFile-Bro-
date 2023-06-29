@@ -1,0 +1,72 @@
+package AA;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class AA {
+    Scanner inInt = new Scanner(System.in);
+    Scanner inStr = new Scanner(System.in);
+    char[ ] MTKa, MTKb, key;
+    char[ ] sort = new char[3];
+    int L, K;
+    String a, b, k;
+    public static void main(String[] args) {
+        AA croma = new AA();
+        croma.getLength();
+        croma.getSt();
+        croma.crack();
+    }
+    
+    void getLength() {
+        do {
+            System.out.println("Enter the number of characters of Lock and Key !!!Must be between 1-127!!!");
+            L = inInt.nextInt();
+            K = inStr.nextInt();
+        } while (!((L > 0 && L < 128) && (K > 0 && K < 128)));
+        setLength(L, K);
+    }
+    void setLength(int l, int k) {
+        MTKa = new char[l];
+        MTKb = new char[l];
+        key = new char[k];
+
+    }
+    void getSt() {
+        do {
+            System.out.println(" (lock = " + L + ") (Key = " + K + " )");
+            System.out.println("Enter the number of characters A (up)");
+            a = inStr.next();
+            a+=inStr.nextLine();           
+            System.out.println("Enter the number of characters B (down)");
+            b = inStr.next();
+            b+=inStr.nextLine();            
+            System.out.println("Enter the number of characters Key (middle)");
+            k = inStr.next();
+            k+=inStr.nextLine();            
+              
+        } while (!(a.length() == L && b.length() == L && k.length() == K));
+        pushSt();
+    }
+    void pushSt() {
+        for (int i = 0; i < L; i++) {
+            MTKa[i] = a.charAt(i);
+            MTKb[i] = b.charAt(i);
+        }
+        for (int i = 0; i < K; i++) {
+            key[i] = k.charAt(i);
+        }
+    }
+    void crack() {
+        for (int i = K - 1; i >= 0; i--) {
+            for (int j = 0; j < L; j++) {               
+                sort[0] = MTKa[j];
+                sort[1] = key[i];
+                sort[2] = MTKb[j];
+                Arrays.sort(sort);
+                key[i] = sort[1];
+                System.out.println(key);
+            }         
+        }
+        System.out.println("value is "+Arrays.toString(key));
+    }
+}
